@@ -33,9 +33,10 @@ function App() {
 
   }
 
-
   //데이터 수정(update - put방식)
-
+  const updateMovie = () =>{
+    
+  }
 
 
   //데이터 출력(select - get방식)

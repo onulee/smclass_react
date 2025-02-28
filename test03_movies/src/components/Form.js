@@ -1,7 +1,7 @@
 import React, { useState,useRef, useEffect } from "react";
 
 
-const Form = ({addMovie,uData,temp,setTemp}) =>{
+const Form = ({addMovie,uData,temp,setTemp,updateMovie}) =>{
 
   const [count,setCount] = useState(4);
   const [no,setNo] = useState(0);
@@ -18,8 +18,9 @@ const Form = ({addMovie,uData,temp,setTemp}) =>{
         setNo(uData[0].no);
         setTitle(uData[0].title);
         setDate(uData[0].date);
+        
       }
-    }
+    },[uData]
   )
 
   //데이터 초기화함수
@@ -37,10 +38,18 @@ const Form = ({addMovie,uData,temp,setTemp}) =>{
   //취소
   const cancelBtn = () =>{
     alert("취소버튼");
-    setTitle("");
-    setDate("");
-    setTemp(temp);
+    resetData();
+    setTemp(!temp);
     console.log("temp : "+temp);
+  }
+  const updateBtn = () => {
+    alert(uData[0].no+"번 데이터를 수정합니다.")
+    console.log("번호 : "+uData[0].no);
+    console.log("제목 : "+title);
+    console.log("날짜 : "+date);
+    updateMovie({no:uData[0].no,title:title,date:date})
+    setTemp(!temp);
+    resetData();
   }
   
   //데이터 저장
@@ -65,7 +74,9 @@ const Form = ({addMovie,uData,temp,setTemp}) =>{
 
   return (
     <>
-      {temp?(
+      {
+      
+      temp?(
         <form>
         <div className="mb-3">
           <label for="exampleInputEmail1" className="form-label">영화제목</label>
@@ -78,7 +89,6 @@ const Form = ({addMovie,uData,temp,setTemp}) =>{
           onKeyUp={dateEnter}
           className="form-control" id="exampleInputPassword1"/>
         </div>
-        
         <button type="button" onClick={saveBtn} className="btn btn-primary">저장</button>
       </form>
       ):(
@@ -94,7 +104,7 @@ const Form = ({addMovie,uData,temp,setTemp}) =>{
           onKeyUp={dateEnter}
           className="form-control" id="exampleInputPassword1"/>
         </div>
-        <button type="button" onClick={saveBtn} className="btn btn-primary me-2 ">수정</button>
+        <button type="button" onClick={updateBtn} className="btn btn-primary me-2 ">수정</button>
         <button type="button" onClick={cancelBtn} className="btn btn-primary ">취소</button>
       </form>
 
