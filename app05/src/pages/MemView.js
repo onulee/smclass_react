@@ -1,31 +1,38 @@
 import React,{useEffect, useState} from "react";
-import MovieList from '../components/MovieList';
-import Form from '../components/Form';
+import axios from "axios";
 import Nav from '../components/Nav';
 import View from "../components/View";
+import { useParams } from "react-router-dom"; //parameter값을 받음.
+
 
 const MemView = () =>{
 
-  const [movies,setMovies] = useState(
-    [
-      {no:3,title:"해리포터 3",date:"2022-01-01"},
-      {no:2,title:"해리포터 2",date:"2021-01-01"},
-      {no:1,title:"해리포터 1",date:"2020-01-01"},
-    ]
-  );
+  const [user,setUser] = useState([]);
+  const params = useParams(); //parameter값을 변수로 저장
+  console.log("useParams id : "+params.id);
   
+  //서버와 통신해서 데이터 가져오기
+  //스프링에 있는 url주소를 입력
+  useEffect(
+    () => {
+      axios.get(`http://localhost:8181/member/memberView?id=${params.id}`)
+      .then(
+        response =>{
+          console.log(response);
+          setUser(response.data);
+        }
+      )
+
+    },[]
+  )
   
-
-
-
-
   return (
     <>
       <Nav/>
       <div className="main">
-        <h2>영화상세보기</h2>
+        <h2>회원상세보기</h2>
         <div>
-          <View/>
+          <View user={user}/>
         </div>
       </div>
     

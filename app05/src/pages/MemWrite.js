@@ -28,7 +28,7 @@ const MemWrite = () =>{
     <>
       <Nav/>
       <div className="main">
-        <h2>영화정보쓰기</h2>
+        <h2>회원정보쓰기</h2>
         <Form addMovie={addMovie}  />
         
       </div>

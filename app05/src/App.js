@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import MemList from './pages/MemList';
 import MemWrite from './pages/MemWrite';
 import MemView from './pages/MemView';
+import MList from './pages/MList';
 
 function App() {
   
@@ -15,9 +16,10 @@ function App() {
       <>
       <Routes>
         <Route path="/" element={<Home/>}  />
+        <Route path="/mList" element={<MList/>}  />
         <Route path="/MemList" element={<MemList/>}  />
         <Route path="/MemWrite" element={<MemWrite/>}  />
-        <Route path="/MemView" element={<MemView/>}  />
+        <Route path="/MemView/:id" element={<MemView/>}  />
 
 
       </Routes>
