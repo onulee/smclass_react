@@ -1,25 +1,42 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import MovieList from '../components/MovieList';
 import Form from '../components/Form';
+import MemForm from "../components/MemForm";
 import Nav from '../components/Nav';
+import axios from "axios";
 
 const MemWrite = () =>{
 
-  // 스프링에서 데이터를 가져와서 출력
-    //json데이터, 배열객체, 일반변수는 새로고침을 해야 화면에 적용이 됨.
-    // useState변수는 자동으로 화면에 적용
-    // useEffect사용해서 db에서 데이터를 가져와 movies에 저장
-    const [movies,setMovies] = useState(
-      [
-        {no:3,title:"해리포터 3",date:"2022-01-01"},
-        {no:2,title:"해리포터 2",date:"2021-01-01"},
-        {no:1,title:"해리포터 1",date:"2020-01-01"},
-      ]
-    );
+    const [users,setUsers] = useState([]);
+
+    //서버와 통신해서 데이터 가져오기
+    //스프링에 있는 url주소를 입력
+    useEffect(
+      () => {
+        axios.get("http://localhost:8181/member/memberList")
+        .then(
+          response =>{
+            console.log(response);
+            setUsers(response.data);
+          }
+        )
+
+      },[]
+    )
+    
   
     //데이터 추가(insert - post방식)
-    const addMovie = (movie) =>{
-       setMovies([movie,...movies,]); // 3개데이터 -> 3개데이터 모두 지우고, 최종데이터만 저장
+    const addUser = (user) =>{
+        axios.post("http://localhost:8181/member/memberInsert",
+        user  
+        )
+        .then(
+          response =>{
+            console.log(response);
+            setUsers([response.data,...users,]);
+          }
+        )
+      //setUsers([user,...users,]); // 3개데이터 -> 3개데이터 모두 지우고, 최종데이터만 저장
     }
 
 
@@ -29,7 +46,7 @@ const MemWrite = () =>{
       <Nav/>
       <div className="main">
         <h2>회원정보쓰기</h2>
-        <Form addMovie={addMovie}  />
+        <MemForm addUser={addUser}  />
         
       </div>
     
